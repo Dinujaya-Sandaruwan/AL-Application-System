@@ -10,6 +10,7 @@ const poppins = Poppins({
 });
 import "@styles/style.scss";
 import { ToastContainer } from "react-toastify";
+import UnderConstruction from "./components/UnderConstruction";
 
 export const metadata: Metadata = {
   title: "Al Application form - Mayurapada Central College",
@@ -37,7 +38,8 @@ export default function RootLayout({
           pauseOnHover
           theme="dark"
         />
-        {children}
+        {/* {children} */}
+        <UnderConstruction />
       </body>
     </html>
   );

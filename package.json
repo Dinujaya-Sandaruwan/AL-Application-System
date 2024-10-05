@@ -19,6 +19,7 @@
     "jspdf-autotable": "^3.8.3",
     "lottie-react-native": "^6.7.2",
     "lottie-web": "^5.12.2",
+    "lucide-react": "^0.447.0",
     "mongoose": "^8.5.3",
     "mongoose-sequence": "^6.0.1",
     "next": "14.2.5",

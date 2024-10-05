@@ -1,0 +1,126 @@
+.under-construction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+  .content {
+    text-align: center;
+    max-width: 600px;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 2.5rem;
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .message {
+      margin-bottom: 2rem;
+
+      .primary {
+        font-size: 1.25rem;
+        color: #34495e;
+        margin-bottom: 0.5rem;
+      }
+
+      .secondary {
+        font-size: 1rem;
+        color: #7f8c8d;
+      }
+    }
+
+    .info-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+
+      .time-estimate {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1.25rem;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 50px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        .icon {
+          color: #e74c3c;
+          margin-right: 0.5rem;
+        }
+
+        span {
+          color: #2c3e50;
+          font-weight: 500;
+        }
+      }
+
+      .refresh-button {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1.25rem;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+          background-color: #2980b9;
+          transform: translateY(-2px);
+        }
+
+        .icon {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .animation-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .under-construction {
+    .content {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .message {
+        .primary {
+          font-size: 1.1rem;
+        }
+
+        .secondary {
+          font-size: 0.9rem;
+        }
+      }
+
+      .info-section {
+        flex-direction: column;
+
+        .time-estimate,
+        .refresh-button {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
