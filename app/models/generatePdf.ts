@@ -4,7 +4,6 @@ import { IEStudent } from "./e_student";
 
 export const generatePdf = (student: IEStudent): ArrayBuffer => {
   const doc = new jsPDF();
-  console.log("Generating PDF for student: ", student);
 
   // Add a logo (Optional)
   // const logo = readFileSync(path.join(process.cwd(), "public", "pdfbg.png"), { encoding: "base64" });

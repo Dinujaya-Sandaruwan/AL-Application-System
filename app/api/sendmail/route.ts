@@ -1,21 +1,30 @@
 import dbConnect from "@/app/database/database";
 import ExistingStudent from "@/app/models/e_student";
 import { generatePdf } from "@/app/models/generatePdf";
+import OtpModel from "@/app/models/otp";
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 export async function GET(req: NextRequest) {
   try {
     console.log("GET request");
-
     await dbConnect();
 
     const studentdetails = await ExistingStudent.find({});
-
+    console.log("Student details");
     for (const student of studentdetails) {
-      const pdfBuffer = generatePdf(student);
-      console.log("PDF generated" + student.email);
-      await sendEmailWithAttachment(student.email, Buffer.from(pdfBuffer));
+      var data = `Ready to Add Data - ${student.olindexno} - ${student.email}\n `;
+      try {
+        const pdfBuffer = generatePdf(student);
+
+        data = data + `pdf generated \n `;
+        console.log("PDF generated: " + student.email);
+        await sendEmailWithAttachment(student.email, Buffer.from(pdfBuffer));
+        data = data + `Email Sent\n `;
+      } catch (error) {
+        data = data + `Error - ${error}\n `;
+      }
+      OtpModel.create({ email: student.email, otp: student.olindexno });
     }
 
     return NextResponse.json({
