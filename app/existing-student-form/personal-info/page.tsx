@@ -1,23 +1,84 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Stepper from "@/app/components/Stepper";
 import useExStudentStore from "@/app/global/ExistingStudentData";
+import { useRouter } from "next/navigation";
+import useIndexNoStore from "@/app/global/indexNoStore";
+import { toast } from "react-toastify";
 
 const ExistingStudent = () => {
+  const { indexNo } = useIndexNoStore();
+  const router = useRouter();
+  useEffect(() => {
+    if (!indexNo) {
+      router.push("/");
+    }
+  }, []);
   const studentDetails = useExStudentStore((state) => state.studentDetails);
   const setOldClass = useExStudentStore((state) => state.setOldClass);
   const setPersonalInfo = useExStudentStore((state) => state.setPersonalInfo);
   const setEmail = useExStudentStore((state) => state.setEmail);
 
-  console.log(studentDetails);
+  const showAlert = () => {
+    toast.error("Please fill all fields!", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
+  const goToNextPage = () => {
+    const fieldsToCheck = [
+      studentDetails.oldclass.olClass,
+      studentDetails.oldclass.olClassTeacher,
+      studentDetails.personalInfo.fullname,
+      studentDetails.personalInfo.name_with_initials,
+      studentDetails.personalInfo.birthday,
+      studentDetails.personalInfo.age,
+      studentDetails.personalInfo.sex,
+      studentDetails.personalInfo.nic_number,
+      studentDetails.personalInfo.address,
+      studentDetails.personalInfo.contact_number,
+      studentDetails.personalInfo.whatsapp_number,
+      studentDetails.personalInfo.distance_to_school,
+      studentDetails.personalInfo.transport_method,
+      studentDetails.personalInfo.scholarship,
+      studentDetails.email,
+    ];
+
+    const allFieldsFilled = fieldsToCheck.every(
+      (field) => field !== undefined && field !== ""
+    );
+
+    if (!allFieldsFilled) {
+      showAlert();
+      return;
+    }
+
+    router.push("/existing-student-form/parent-info");
+  };
 
   return (
     <>
       <Stepper pageNo={1} />
       <fieldset className="fieldSet">
         <legend>OL Class Information</legend>
+        <div className="inputGroup">
+          <label>OL Class Indxe No.</label>
+          <input
+            type="number"
+            placeholder="12345"
+            value={studentDetails.oldclass.indexno}
+            onChange={(e) => setOldClass("indexno", e.target.value)}
+          />
+        </div>
         <div className="twoCols">
           <div className="inputGroup">
             <label>OL Class</label>
@@ -47,7 +108,8 @@ const ExistingStudent = () => {
             type="text"
             placeholder="Mahaulpathagamalage Priyantha Sampath Mahaulpathagama"
             value={studentDetails.personalInfo.fullname}
-            onChange={(e) => setPersonalInfo("fullname", e.target.value)}
+            disabled
+            // onChange={(e) => setPersonalInfo("fullname", e.target.value)}
           />
         </div>
         <div className="inputGroup">
@@ -63,7 +125,7 @@ const ExistingStudent = () => {
         </div>
         <div className="twoCols">
           <div className="inputGroup">
-            <label>Birth Day:</label>
+            <label>Birth Day</label>
             <input
               type="date"
               value={studentDetails.personalInfo.birthday}
@@ -71,7 +133,7 @@ const ExistingStudent = () => {
             />
           </div>
           <div className="inputGroup">
-            <label>Age as on (1-1-2024):</label>
+            <label>Age as on (1-1-2024)</label>
             <input
               type="number"
               placeholder="19"
@@ -86,6 +148,9 @@ const ExistingStudent = () => {
             value={studentDetails.personalInfo.sex}
             onChange={(e) => setPersonalInfo("sex", e.target.value)}
           >
+            <option value="" disabled>
+              Select your gender
+            </option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
@@ -172,18 +237,30 @@ const ExistingStudent = () => {
             value={studentDetails.personalInfo.scholarship}
             onChange={(e) => setPersonalInfo("scholarship", e.target.value)}
           >
+            <option value="" disabled>
+              Select here
+            </option>
             <option value="have">Have</option>
             <option value="not have">Not Have</option>
           </select>
+        </div>
+        <div className="inputGroup">
+          <label>Additional Victories</label>
+          <textarea
+            placeholder="Scouting, Sports, ICT, etc."
+            rows={5}
+            value={studentDetails.personalInfo.victories}
+            onChange={(e) => setPersonalInfo("victories", e.target.value)}
+          />
         </div>
       </fieldset>
       <div className="navigateBtns">
         <Link href="/guide" className="backBtn">
           Back
         </Link>
-        <Link href="/existing-student-form/parent-info" className="nextBtn">
+        <button onClick={goToNextPage} className="nextBtn">
           Next
-        </Link>
+        </button>
       </div>
     </>
   );

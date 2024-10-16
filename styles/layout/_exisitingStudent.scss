@@ -164,7 +164,8 @@
       // padding-top: 20px;
     }
     input,
-    select {
+    select,
+    textarea {
       margin-bottom: 10px;
       padding: 0.5625rem;
       padding: clamp(
@@ -201,7 +202,13 @@
       );
     }
 
-    input:focus {
+    textarea {
+      /* for all text* area elements */
+      resize: none;
+    }
+
+    input:focus,
+    textarea:focus {
       outline: none;
       //   border: 1px solid var(--light-blue);
       background-color: #4e4e4e;
@@ -223,12 +230,14 @@
       /* Firefox 18- */
       color: var(--placeholder);
     }
-    select {
+    select,
+    textarea {
       appearance: none;
       outline: none;
     }
 
-    select:focus {
+    select:focus,
+    textarea:focus {
       border: none;
       outline: none;
     }

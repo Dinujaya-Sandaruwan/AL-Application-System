@@ -25,6 +25,7 @@ class OTPSingleton {
   }
 
   public getEmail(otp: string): string | undefined {
+    console.log(" get Email", this.otpMap.get(otp));
     return this.otpMap.get(otp);
   }
 

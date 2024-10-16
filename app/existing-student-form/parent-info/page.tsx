@@ -1,11 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Stepper from "@/app/components/Stepper";
 import useExStudentStore from "@/app/global/ExistingStudentData";
+import useIndexNoStore from "@/app/global/indexNoStore";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const ParentInfoForm = () => {
+  const { indexNo } = useIndexNoStore();
+  const router = useRouter();
+  useEffect(() => {
+    if (!indexNo) {
+      router.push("/");
+    }
+  }, []);
   const parentInfo = useExStudentStore(
     (state) => state.studentDetails.parentInfo
   );
@@ -21,6 +31,56 @@ const ParentInfoForm = () => {
       field as keyof (typeof parentInfo)[typeof parent],
       value
     );
+  };
+  const showAlert = () => {
+    toast.error("Please fill all fields!", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
+  const goToNextPage = () => {
+    const isCategoryComplete = (category: any) => {
+      return (
+        category.name && category.nic_number && category.address && category.job
+      );
+    };
+
+    const isCategoryPartiallyFilled = (category: any) => {
+      return (
+        category.name || category.nic_number || category.address || category.job
+      );
+    };
+
+    const father = parentInfo.father || {};
+    const mother = parentInfo.mother || {};
+    const guardian = parentInfo.guardian || {};
+
+    if (
+      (isCategoryPartiallyFilled(father) && !isCategoryComplete(father)) ||
+      (isCategoryPartiallyFilled(mother) && !isCategoryComplete(mother)) ||
+      (isCategoryPartiallyFilled(guardian) && !isCategoryComplete(guardian))
+    ) {
+      showAlert();
+      return;
+    }
+
+    if (
+      !isCategoryComplete(father) &&
+      !isCategoryComplete(mother) &&
+      !isCategoryComplete(guardian)
+    ) {
+      showAlert();
+      return;
+    }
+
+    router.push("/existing-student-form/ol-results");
   };
 
   return (
@@ -58,6 +118,17 @@ const ParentInfoForm = () => {
             value={parentInfo.father.address}
             onChange={(e) =>
               handleParentInfoChange("father", "address", e.target.value)
+            }
+          />
+        </div>
+        <div className="inputGroup">
+          <label>Father&apos;s Contact Number</label>
+          <input
+            type="text"
+            placeholder="012 345 6789"
+            value={parentInfo.father?.contact_number || ""}
+            onChange={(e) =>
+              handleParentInfoChange("father", "contact_number", e.target.value)
             }
           />
         </div>
@@ -109,6 +180,17 @@ const ParentInfoForm = () => {
           />
         </div>
         <div className="inputGroup">
+          <label>Mother&apos;s Contact Number</label>
+          <input
+            type="text"
+            placeholder="012 345 6789"
+            value={parentInfo.mother?.contact_number || ""}
+            onChange={(e) =>
+              handleParentInfoChange("mother", "contact_number", e.target.value)
+            }
+          />
+        </div>
+        <div className="inputGroup">
           <label>Mother&apos;s job</label>
           <input
             type="text"
@@ -156,6 +238,21 @@ const ParentInfoForm = () => {
           />
         </div>
         <div className="inputGroup">
+          <label>Guardian&apos;s Contact Number</label>
+          <input
+            type="text"
+            placeholder="012 345 6789"
+            value={parentInfo.guardian?.contact_number || ""}
+            onChange={(e) =>
+              handleParentInfoChange(
+                "guardian",
+                "contact_number",
+                e.target.value
+              )
+            }
+          />
+        </div>
+        <div className="inputGroup">
           <label>Guardian&apos;s job</label>
           <input
             type="text"
@@ -171,9 +268,9 @@ const ParentInfoForm = () => {
         <Link href="/existing-student-form/personal-info" className="backBtn">
           Back
         </Link>
-        <Link href="/existing-student-form/ol-results" className="nextBtn">
+        <button onClick={goToNextPage} className="nextBtn">
           Next
-        </Link>
+        </button>
       </div>
     </>
   );

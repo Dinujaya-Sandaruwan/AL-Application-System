@@ -9,8 +9,19 @@ import Technology from "@/app/components/alStreamSubjects/Technology";
 import Arts from "@/app/components/alStreamSubjects/Arts";
 import Stepper from "@/app/components/Stepper";
 import useExStudentStore from "@/app/global/ExistingStudentData";
+import { useRouter } from "next/navigation";
+import useIndexNoStore from "@/app/global/indexNoStore";
+import { toast } from "react-toastify";
 
 const ALStreamSelectionForm = () => {
+  const { indexNo } = useIndexNoStore();
+  const router = useRouter();
+  useEffect(() => {
+    if (!indexNo) {
+      router.push("/");
+    }
+  }, []);
+
   const studentDetails = useExStudentStore((state) => state.studentDetails);
   const { alSubjects, setALSubjects } = useExStudentStore((state) => ({
     alSubjects: state.studentDetails.alSubjects,
@@ -40,6 +51,43 @@ const ALStreamSelectionForm = () => {
     }
   }, [alSubjects.stream, alSubjects.subject.length, setALSubjects]);
 
+  const showAlert = () => {
+    toast.error("Please fill all fields!", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
+  const goToNextPage = () => {
+    if (!alSubjects.stream) {
+      showAlert();
+      return;
+    }
+    const fieldsToCheck = [
+      alSubjects.stream,
+      alSubjects.subject[0].subject,
+      alSubjects.subject[1].subject,
+      alSubjects.subject[2].subject,
+    ];
+
+    const allFieldsFilled = fieldsToCheck.every(
+      (field) => field !== undefined && field !== ""
+    );
+
+    if (!allFieldsFilled) {
+      showAlert();
+      return;
+    }
+
+    router.push("/existing-student-form/all-data");
+  };
+
   return (
     <>
       <Stepper pageNo={4} />
@@ -68,9 +116,12 @@ const ALStreamSelectionForm = () => {
         <Link href="/existing-student-form/ol-results" className="backBtn">
           Back
         </Link>
-        <button className="nextBtn" onClick={() => console.log(studentDetails)}>
-          Submit
+        <button onClick={goToNextPage} className="backBtn">
+          Check Your Information
         </button>
+        {/* <button className="nextBtn" onClick={() => console.log(studentDetails)}>
+          Submit
+        </button> */}
       </div>
     </>
   );

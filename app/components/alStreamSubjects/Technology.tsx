@@ -10,7 +10,7 @@ const Technology: React.FC = () => {
   const handleSubjectChange = (
     index: number,
     subject: string,
-    medium: string = "English"
+    medium: string = "Sinhala"
   ) => {
     const newSubjects = [...alSubjects.subject];
     newSubjects[index] = { subject, medium };
@@ -52,7 +52,9 @@ const Technology: React.FC = () => {
             value={alSubjects.subject[1]?.subject || ""}
             onChange={(e) => handleSubjectChange(1, e.target.value)}
           >
-            <option value="">Select a subject</option>
+            <option value="" disabled>
+              Select a subject
+            </option>
             <option value="Engineering Technology">
               Engineering Technology
             </option>
@@ -65,7 +67,9 @@ const Technology: React.FC = () => {
             value={alSubjects.subject[2]?.subject || ""}
             onChange={(e) => handleSubjectChange(2, e.target.value)}
           >
-            <option value="">Select a subject</option>
+            <option value="" disabled>
+              Select a subject
+            </option>
             <option value="ICT">
               Information and Communication Technology
             </option>

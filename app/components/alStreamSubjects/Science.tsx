@@ -7,23 +7,19 @@ const Science: React.FC = () => {
     setALSubjects: state.setALSubjects,
   }));
 
-  const handleSubjectChange = (
-    index: number,
-    subject: string,
-    medium: string = "English"
-  ) => {
+  const handleSubjectChange = (index: number, subject: string) => {
     const newSubjects = [...alSubjects.subject];
-    newSubjects[index] = { subject, medium };
+    newSubjects[index] = { subject, medium: "Sinhala" };
     setALSubjects("science", newSubjects);
   };
 
   React.useEffect(() => {
-    // Initialize subjects if they're not set
-    if (alSubjects.subject.length === 0) {
+    // Check if the first two subjects are not set, and initialize them
+    if (!alSubjects.subject[0]?.subject || !alSubjects.subject[1]?.subject) {
       setALSubjects("science", [
         { subject: "Biology", medium: "Sinhala" },
         { subject: "Chemistry", medium: "Sinhala" },
-        { subject: "", medium: "Sinhala" },
+        { subject: alSubjects.subject[2]?.subject || "", medium: "Sinhala" },
       ]);
     }
   }, [alSubjects.subject, setALSubjects]);
@@ -50,7 +46,6 @@ const Science: React.FC = () => {
         <select
           value={alSubjects.subject[2]?.subject || ""}
           onChange={(e) => handleSubjectChange(2, e.target.value)}
-          defaultValue=""
         >
           <option value="" disabled>
             Select a subject

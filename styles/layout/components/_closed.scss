@@ -1,0 +1,26 @@
+.closed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .school-badge {
+    width: 6.25rem;
+    width: clamp(6.25rem, 5rem + 6.666666666666667vw, 7.5rem);
+    height: auto;
+  }
+
+  h1 {
+    color: rgb(230, 46, 46);
+    font-size: 1.875rem;
+    font-size: clamp(
+      1.875rem,
+      1.172752808988764rem + 2.9962546816479403vw,
+      4.375rem
+    );
+    text-align: center;
+  }
+}

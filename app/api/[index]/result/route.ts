@@ -19,6 +19,11 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
     const result = await OLResultTemplete.find({ indexno: parseInt(index) });
 
     console.log(result);
+
+    if (result.length === 0) {
+      return NextResponse.json({ error: "No data found" }, { status: 200 });
+    }
+
     return NextResponse.json({
       studentdetails: result,
     });

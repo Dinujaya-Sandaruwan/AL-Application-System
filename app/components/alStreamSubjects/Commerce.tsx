@@ -9,15 +9,28 @@ const Commerce: React.FC = () => {
 
   const handleSubjectChange = (index: number, value: string) => {
     const newSubjects = [...alSubjects.subject];
-    newSubjects[index] = { ...newSubjects[index], subject: value };
+    newSubjects[index] = {
+      ...newSubjects[index],
+      subject: value,
+      medium: "Sinhala",
+    };
     setALSubjects("commerce", newSubjects);
   };
 
-  const handleMediumChange = (index: number, value: string) => {
-    const newSubjects = [...alSubjects.subject];
-    newSubjects[index] = { ...newSubjects[index], medium: value };
-    setALSubjects("commerce", newSubjects);
-  };
+  React.useEffect(() => {
+    // Initialize subjects if they're not set or if the first two subjects are not correctly set
+    if (
+      alSubjects.subject.length === 0 ||
+      alSubjects.subject[0].subject !== "Economics" ||
+      alSubjects.subject[1].subject !== "Accounting"
+    ) {
+      setALSubjects("commerce", [
+        { subject: "Economics", medium: "Sinhala" },
+        { subject: "Accounting", medium: "Sinhala" },
+        { subject: "", medium: "Sinhala" },
+      ]);
+    }
+  }, [alSubjects.subject, setALSubjects]);
 
   return (
     <fieldset className="fieldSet">
@@ -25,39 +38,11 @@ const Commerce: React.FC = () => {
       <div className="twoCols">
         <div className="inputGroup">
           <label>First Subject</label>
-          <select
-            value={alSubjects.subject[0]?.subject || "Economics"}
-            onChange={(e) => handleSubjectChange(0, e.target.value)}
-          >
-            <option value="Economics">Economics</option>
-          </select>
-          <select
-            value={alSubjects.subject[0]?.medium || ""}
-            onChange={(e) => handleMediumChange(0, e.target.value)}
-          >
-            <option value="">Select Medium</option>
-            <option value="Sinhala">Sinhala</option>
-            <option value="English">English</option>
-            <option value="Tamil">Tamil</option>
-          </select>
+          <input type="text" value="Economics" readOnly />
         </div>
         <div className="inputGroup">
           <label>Second Subject</label>
-          <select
-            value={alSubjects.subject[1]?.subject || "Accounting"}
-            onChange={(e) => handleSubjectChange(1, e.target.value)}
-          >
-            <option value="Accounting">Accounting</option>
-          </select>
-          <select
-            value={alSubjects.subject[1]?.medium || ""}
-            onChange={(e) => handleMediumChange(1, e.target.value)}
-          >
-            <option value="">Select Medium</option>
-            <option value="Sinhala">Sinhala</option>
-            <option value="English">English</option>
-            <option value="Tamil">Tamil</option>
-          </select>
+          <input type="text" value="Accounting" readOnly />
         </div>
       </div>
       <div className="inputGroup">
@@ -71,15 +56,6 @@ const Commerce: React.FC = () => {
           <option value="Information and Communication Technology">
             Information and Communication Technology
           </option>
-        </select>
-        <select
-          value={alSubjects.subject[2]?.medium || ""}
-          onChange={(e) => handleMediumChange(2, e.target.value)}
-        >
-          <option value="">Select Medium</option>
-          <option value="Sinhala">Sinhala</option>
-          <option value="English">English</option>
-          <option value="Tamil">Tamil</option>
         </select>
       </div>
     </fieldset>

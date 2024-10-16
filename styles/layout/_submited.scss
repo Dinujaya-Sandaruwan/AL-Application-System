@@ -1,0 +1,79 @@
+:root {
+  --black: #000;
+  --dark-white: #b5b5b5;
+  --white: #dadada;
+  --background: #18191a;
+  --light-blue: #2870dd;
+  --blue: #105ad0;
+  --gray: #808080;
+  --dark-gray: #171717;
+  --footer-gray: #000316;
+  --placeholder: #4e4e4e;
+  --border: #323232;
+}
+
+.application-form-container {
+  background-color: var(--background);
+  color: var(--white);
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--dark-white);
+  }
+
+  .card {
+    background-color: var(--dark-gray);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .message {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+
+      .highlight {
+        color: var(--light-blue);
+        font-weight: bold;
+      }
+    }
+
+    .ref-no {
+      font-size: 1rem;
+      color: var(--dark-white);
+      margin-bottom: 1.5rem;
+    }
+
+    .home-link {
+      display: inline-block;
+      background-color: var(--blue);
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: var(--light-blue);
+      }
+    }
+  }
+}
