@@ -1,5 +1,7 @@
 # Mayurapada Central College A/L Admission Portal
 
+<img width="1822" alt="image" src="https://github.com/user-attachments/assets/b5a4de14-5c84-4217-9dcc-feab59182d47">
+
 ## Overview
 
 The **Mayurapada Central College A/L Admission Portal** is an online application platform designed to streamline the admission process for A/L students, effectively managing over 900+ applicants. This project is optimized for Choreo, which enhances deployment and management capabilities.
